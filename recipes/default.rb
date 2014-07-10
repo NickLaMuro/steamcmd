@@ -17,3 +17,45 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
+package 'lib32gcc1'
+
+user node['steamcmd']['user'] do
+  action :create
+  supports :manage_home => true
+  home node['steamcmd']['home']
+end
+
+directory node['steamcmd']['steamcmd_dir'] do
+  owner node['steamcmd']['user']
+  group node['steamcmd']['group']
+  mode '0755'
+  action :create
+end
+
+directory node['steamcmd']['apps_dir'] do
+  owner node['steamcmd']['user']
+  group node['steamcmd']['group']
+  mode '0755'
+  action :create
+end
+
+unless ::File.exists?("#{node['steamcmd']['steamcmd_dir']}/steamcmd.sh")
+
+  remote_file "/tmp/steamcmd_linux.tar.gz" do
+    source "http://media.steampowered.com/installer/steamcmd_linux.tar.gz"
+    owner node['steamcmd']['user']
+    group node['steamcmd']['group']
+    mode '0755'
+    action :create
+  end
+
+  execute 'steamcmd_linux.tar.gz' do
+    user node['steamcmd']['user']
+    group node['steamcmd']['group']
+    cwd node['steamcmd']['steamcmd_dir']
+    command "tar -xvzpf /tmp/steamcmd_linux.tar.gz && rm /tmp/steamcmd_linux.tar.gz"
+    timeout 1800
+  end
+
+end

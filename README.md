@@ -1,23 +1,10 @@
 steamcmd Cookbook
 =================
-TODO: Enter the cookbook description here.
-
-e.g.
-This cookbook makes your favorite breakfast sandwich.
-
-Requirements
-------------
-TODO: List your cookbook requirements. Be sure to include any requirements this cookbook has on platforms, libraries, other cookbooks, packages, operating systems, etc.
-
-e.g.
-#### packages
-- `toaster` - steamcmd needs toaster to brown your bagel.
+Installs and configures steam apps with [SteamCMD](https://developer.valvesoftware.com/wiki/SteamCMD).
 
 Attributes
 ----------
-TODO: List your cookbook attributes here.
 
-e.g.
 #### steamcmd::default
 <table>
   <tr>
@@ -37,9 +24,7 @@ e.g.
 Usage
 -----
 #### steamcmd::default
-TODO: Write usage instructions for each cookbook.
 
-e.g.
 Just include `steamcmd` in your node's `run_list`:
 
 ```json
@@ -51,11 +36,23 @@ Just include `steamcmd` in your node's `run_list`:
 }
 ```
 
+#### Convenience recipes
+
+Just include app-specific recipe in your node's `run_list` or do `include_recipe` from inside your cookbook:
+
+```
+include_recipe 'steamcmd::counterstrike_source'
+```
+
+Avaialble recipes:
+
+* counterstrike_source
+* team_fortress
+* day_of_defeat_source
+
 Contributing
 ------------
-TODO: (optional) If this is a public cookbook, detail the process for contributing. If this is a private cookbook, remove this section.
 
-e.g.
 1. Fork the repository on Github
 2. Create a named feature branch (like `add_component_x`)
 3. Write your change
@@ -63,6 +60,7 @@ e.g.
 5. Run the tests, ensuring they all pass
 6. Submit a Pull Request using Github
 
-License and Authors
--------------------
-Authors: TODO: List authors
+Authors
+------------
+
+- [Marcin Sawicki](https://github.com/odcinek)
