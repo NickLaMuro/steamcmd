@@ -1,25 +1,6 @@
 steamcmd Cookbook
 =================
-Installs and configures steam apps with [SteamCMD](https://developer.valvesoftware.com/wiki/SteamCMD).
-
-Attributes
-----------
-
-#### steamcmd::default
-<table>
-  <tr>
-    <th>Key</th>
-    <th>Type</th>
-    <th>Description</th>
-    <th>Default</th>
-  </tr>
-  <tr>
-    <td><tt>['steamcmd']['bacon']</tt></td>
-    <td>Boolean</td>
-    <td>whether to include bacon</td>
-    <td><tt>true</tt></td>
-  </tr>
-</table>
+Installs and configures steam servers with [SteamCMD](https://developer.valvesoftware.com/wiki/SteamCMD).
 
 Usage
 -----
@@ -35,10 +16,11 @@ Just include `steamcmd` in your node's `run_list`:
   ]
 }
 ```
+and use `steamcmd_app` definition (see `counterstrike_source` recipe for examples).
 
 #### Convenience recipes
 
-Just include app-specific recipe in your node's `run_list` or do `include_recipe` from inside your cookbook:
+Just include game-specific recipe in your node's `run_list` or do `include_recipe` from inside your cookbook:
 
 ```
 include_recipe 'steamcmd::counterstrike_source'
