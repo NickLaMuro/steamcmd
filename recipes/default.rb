@@ -18,6 +18,7 @@
 # limitations under the License.
 #
 
+include_recipe 'apt'
 package 'lib32gcc1'
 
 user node['steamcmd']['user'] do
