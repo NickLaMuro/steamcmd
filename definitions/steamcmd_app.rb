@@ -12,6 +12,12 @@ define :steamcmd_app, :app_id => nil, :app_name => nil, :app_game => nil, :cfg_f
   dir = "#{node['steamcmd']['apps_dir']}/#{params[:app_id]}"
   params[:cfg_file] = "#{dir}/#{params[:cfg_file]}"
 
+  if params[:username] and params[:password]
+    login = "#{params[:username]} #{params[:password]}"
+  else
+    login = 'anonymous'
+  end
+
   execute "install #{params[:app_name]}" do
     only_if {
       !::File.directory?(dir) ||
@@ -20,7 +26,7 @@ define :steamcmd_app, :app_id => nil, :app_name => nil, :app_game => nil, :cfg_f
     user node['steamcmd']['user']
     group node['steamcmd']['group']
     cwd node['steamcmd']['apps_dir']
-    command "#{node['steamcmd']['steamcmd_dir']}/steamcmd.sh +login anonymous +force_install_dir #{dir} +app_update #{params[:app_id]} validate +quit"
+    command "#{node['steamcmd']['steamcmd_dir']}/steamcmd.sh +login #{login} +force_install_dir #{dir} +app_update #{params[:app_id]} validate +quit"
     action :run
     retries 3
     retry_delay 5
