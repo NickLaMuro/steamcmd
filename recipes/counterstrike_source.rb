@@ -25,6 +25,7 @@ cfg_file = "#{node['steamcmd']['apps_dir']}/#{params[:app_id]}/cstrike/cfg/confi
 steamcmd_app app_name do
   app_id 232330
   app_name app_name
+  use_upstart true
   game_exec 'srcds_run'
   exec_opts %Q{-game cstrike +ip 0.0.0.0 +servercfgfile #{cfg_file} -flushlog -debug -allowdebug -dev +sv_lan 1 +hostname "my_cstrike_server" +game_type 0 +game_mode 0 +map de_dust2}
 end

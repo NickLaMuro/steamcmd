@@ -31,19 +31,21 @@ define :steamcmd_app, :app_id => nil, :app_name => nil do
     retry_delay 5
   end
 
-  template "/etc/init/#{params[:app_name]}.conf" do
-    mode '0644'
-    source 'upstart.erb'
-    variables({ :params => params })
-    notifies :restart, "service[#{params[:app_name]}]"
-  end
+  if params[:use_upstart]
+    template "/etc/init/#{params[:app_name]}.conf" do
+      mode '0644'
+      source 'upstart.erb'
+      variables({ :params => params })
+      notifies :restart, "service[#{params[:app_name]}]"
+    end
 
-  service params[:app_name] do
-    # Upstart does not re-read configuration on restart
-    # TODO: Make this stop+start instead
-    provider Chef::Provider::Service::Upstart
-    supports :restart => true, :reload => false, :status => false
-    action [ :enable, :start ]
+    service params[:app_name] do
+      # Upstart does not re-read configuration on restart
+      # TODO: Make this stop+start instead
+      provider Chef::Provider::Service::Upstart
+      supports :restart => true, :reload => false, :status => false
+      action [ :enable, :start ]
+    end
   end
 
 end
