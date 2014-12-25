@@ -9,4 +9,4 @@ umask 022
 setuid <%=node['steamcmd']['user']%>
 setgid <%=node['steamcmd']['group']%>
 
-exec <%=node['steamcmd']['apps_dir']%>/<%=@params[:app_id]%>/srcds_run -game <%=@params[:app_game]%> +ip 0.0.0.0 +servercfgfile <%=@params[:cfg_file]%> -flushlog -debug -allowdebug -dev +sv_lan 1 +hostname "<%=@params[:hostname]%>" +game_type 0 +game_mode 0 +map de_dust2
+exec <%=node['steamcmd']['apps_dir']%>/<%=@params[:app_id]%>/<%= @params[:game_exec] %> <%= @params[:exec_opts] %>

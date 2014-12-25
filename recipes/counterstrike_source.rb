@@ -20,12 +20,11 @@
 
 include_recipe 'steamcmd::default'
 
-app_name = 'counterstrike_source'
+cfg_file = "#{node['steamcmd']['apps_dir']}/#{params[:app_id]}/cstrike/cfg/config_default.cfg"
 
 steamcmd_app app_name do
   app_id 232330
   app_name app_name
-  app_game 'cstrike'
-  hostname 'my_cstrike_server'
-  cfg_file 'cstrike/cfg/config_default.cfg'
+  game_exec 'srcds_run'
+  exec_opts %Q{-game cstrike +ip 0.0.0.0 +servercfgfile #{cfg_file} -flushlog -debug -allowdebug -dev +sv_lan 1 +hostname "my_cstrike_server" +game_type 0 +game_mode 0 +map de_dust2}
 end

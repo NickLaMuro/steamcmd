@@ -1,4 +1,4 @@
-define :steamcmd_app, :app_id => nil, :app_name => nil, :app_game => nil, :cfg_file => nil do
+define :steamcmd_app, :app_id => nil, :app_name => nil do
 
   include_recipe 'steamcmd::default'
 
@@ -10,7 +10,6 @@ define :steamcmd_app, :app_id => nil, :app_name => nil, :app_game => nil, :cfg_f
   end
 
   dir = "#{node['steamcmd']['apps_dir']}/#{params[:app_id]}"
-  params[:cfg_file] = "#{dir}/#{params[:cfg_file]}"
 
   if params[:username] and params[:password]
     login = "#{params[:username]} #{params[:password]}"
@@ -37,11 +36,6 @@ define :steamcmd_app, :app_id => nil, :app_name => nil, :app_game => nil, :cfg_f
     source 'upstart.erb'
     variables({ :params => params })
     notifies :restart, "service[#{params[:app_name]}]"
-  end
-
-  link '/etc/init.d/counterstrike_source' do
-    to '/lib/init/upstart-job'
-    action :create
   end
 
   service params[:app_name] do
