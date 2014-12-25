@@ -1,4 +1,5 @@
-define :steamcmd_app, :app_id => nil, :app_name => nil do
+define :steamcmd_app, :app_id => nil, :app_name => nil, :use_upstart => false,
+                      :upstart_template => nil, :upstart_template_cookbook => nil do
 
   include_recipe 'steamcmd::default'
 
@@ -32,9 +33,13 @@ define :steamcmd_app, :app_id => nil, :app_name => nil do
   end
 
   if params[:use_upstart]
+    upstart_template = params[:upstart_template] || 'upstart.erb'
+    upstart_template_cookbook = params[:upstart_template_cookbook] || 'steamcmd'
+
     template "/etc/init/#{params[:app_name]}.conf" do
       mode '0644'
-      source 'upstart.erb'
+      source upstart_template
+      cookbook upstart_template_cookbook
       variables({ :params => params })
       notifies :restart, "service[#{params[:app_name]}]"
     end
