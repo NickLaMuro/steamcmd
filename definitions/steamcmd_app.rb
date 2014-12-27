@@ -28,7 +28,7 @@ define :steamcmd_app, :app_id => nil, :app_name => nil, :use_upstart => false,
     cwd node['steamcmd']['apps_dir']
     command "#{node['steamcmd']['steamcmd_dir']}/steamcmd.sh +login #{login} +force_install_dir #{dir} +app_update #{params[:app_id]} validate +quit"
     action :run
-    retries 3
+    retries params[:retries] || 3
     retry_delay 5
   end
 
