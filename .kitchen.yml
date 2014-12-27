@@ -1,6 +1,10 @@
 ---
 driver:
   name: vagrant
+  network:
+    - ["forwarded_port", {guest: 27015, host: 27015}]
+    - ["forwarded_port", {guest: 27020, host: 27020}]
+    - ["private_network", {ip: "192.168.33.33"}]
   
 provisioner:
   name: chef_solo
@@ -11,4 +15,7 @@ platforms:
 suites:
   - name: default
     run_list: recipe[steamcmd::default]
+    attributes:
+  - name: counterstrike_source
+    run_list: recipe[steamcmd::counterstrike_source]
     attributes:
